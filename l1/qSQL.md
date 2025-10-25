@@ -126,3 +126,104 @@ x
 \
 ```
 
+
+By making this assignment, the new variable jan09 is stored in memory.
+
+This is true whether the source data was also in memory or stored on disk.
+
+Exercise 2
+`Assign the result of below to a variable called `res2`
+Select payment_type and fare from the trips data for the first date.`
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/o
+show res2: select payment_type, fare from trips where date = min date
+</code></pre>
+
+</details>
+
+---
+
+### 2.3  Aggregations 
+`sum` is one of many built-in aggregations. Other built-in aggregations include, but are not limited to
+
+- avg - average (mean)
+- med - median
+- min - minimum value
+- max - maximum value
+- count - number of values
+
+Reference: [Mathematics and statistics](https://code.kx.com/q/basics/math/)
+
+Exercise 3
+`Calculate the minimum and maximum tip from the `jan09` table.`
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/o
+select maxtip: max tip, minTip: min tip from jan09
+/
+tip tip1
+--------
+100 0
+\
+</code></pre>
+
+</details>
+
+### 2.4 Grouping with `by`
+
+```q
+select fare by vendor from jan09
+/
+vendor| fare                                                                 ..
+------| ---------------------------------------------------------------------..
+CMT   | 6.2 12.6 7 6.6 11 12.2 6.6 14.2 7 9 13 7.4 10.6 10.2 15.8 40.2 9.4 5...
+DDS   | 10.9 8.9 9.7 10.9 10.1 6.1 10.9 7.7 8.5 12.1 18.9 10.5 18.5 11.3 9.7 ..
+VTS   | 11.3 15.7 18.1 15.7 6.5 4.5 4.5 15.3 4.9 4.9 4.5 6.9 18.5 20.1 14.1 6..
+\
+
+select sum fare, sum tip by vendor from jan09
+/
+vendor| fare         tip     
+------| ---------------------
+CMT   | 4.430574e+07 2059982 
+DDS   | 6120686      273323.2
+VTS   | 4.798299e+07 2672231
+\
+
+// Get the number of records per day in the filtered table
+select count i by date from jan09
+/
+date      | x     
+----------| ------
+2009.01.10| 483350
+2009.01.11| 405075
+..
+\
+```
+
+Exercise 4
+`What is the biggest tip for each vendor?`
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/o
+select maxTip: max tip by vendor from jan09
+</code></pre>
+
+</details>
+`What is the highest tip and average tip per payment_type?`
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/x
+select maxTip: max tip, avgTip: avg tip by payment_type
+/o
+select maxTip: max tip, avgTip: avg tip by payment_type from jan09
+</code></pre>
+
+</details>
+
+
