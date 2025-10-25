@@ -88,12 +88,12 @@ x
 - [_Q for Mortals_ §9: Queries](https://code.kx.com/q4m3/9_Queries_q-sql/)
 
 Exercise 1
-On the earliest date, how many trips had fewer than two passengers?
+`On the earliest date, how many trips had fewer than two passengers?`
 <details>
   <summary>Answer</summary>
 
 <pre><code>/x
-select count i from trips where date = min date, passengers < 2
+select i from trips where date = min date
 /o
 select count i from trips where date = min date, passengers < 2
 </code></pre>
