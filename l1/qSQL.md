@@ -56,11 +56,16 @@ date       month   vendor passengers fare tip   tip1
 
 #### Structure: columnar database
 |-2020.01.01 - trips
+
 			|-a.txt
+
 			|-b.txt
 |-2020.01.02 - trips
+
 			|-c.txt
+
 			|-.....
+
 
 -> 1st query runs faster
 - 1. `select date, month, vendor, passengers, fare, tip from trips where date = min date, tip > 20`
