@@ -224,6 +224,14 @@ select maxTip: max tip by vendor from jan09
 select maxTip: max tip, avgTip: avg tip by payment_type
 /o
 select maxTip: max tip, avgTip: avg tip by payment_type from jan09
+/
+payment_type| maxTip avgTip     
+------------| ------------------
+CASH        | 82     0.00077795 
+CREDIT      | 100    2.145682   
+Dispute     | 11.25  0.01481096 
+No Charge   | 13.35  0.006573717
+\
 </code></pre>
 
 </details>
