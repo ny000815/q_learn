@@ -56,11 +56,15 @@ date       month   vendor passengers fare tip   tip1
 
 #### Structure: columnar database
 |-2020.01.01 - trips
-     |-a.txt
-     |-b.txt
+
+ |-a.txt
+
+ |-b.txt
 |-2020.01.02 - trips
-     |-c.txt
-     |-.....
+
+ |-c.txt
+
+ |-.....
 
 
 -> 1st query runs faster
@@ -99,6 +103,7 @@ select count i from trips where date = min date, passengers < 2
 ### 2.2 Assignment
 
 Create a new variable as follows:
+
 var_name: expression
 ```q
 // Use keyword 'within' to filter the date
