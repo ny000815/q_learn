@@ -28,10 +28,7 @@ pickup_time | p   s
 `date`date`month`vendor`pickup_time`dropoff_time`duration`passengers`distance..
 \
 
-/
 
-
-/
 ```
 
 [data types doc](https://code.kx.com/q/ref/#datayeps)
