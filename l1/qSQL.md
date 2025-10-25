@@ -82,14 +82,16 @@ x
 Exercise 1
 On the earliest date, how many trips had fewer than two passengers?
 <details>
-	<summary> Answer</summary>
-	```q
-	/x
-	select count i from trips where date = min date, passengers < 2
-	/o
-	select count i from trips where date = min date, passengers < 2
-	```
-</detail>
+  <summary>Answer</summary>
+
+<pre><code>/x
+select count i from trips where date = min date, passengers < 2
+/o
+select count i from trips where date = min date, passengers < 2
+</code></pre>
+
+</details>
+
 
 ---
 
