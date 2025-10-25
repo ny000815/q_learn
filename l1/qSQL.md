@@ -132,8 +132,9 @@ By making this assignment, the new variable jan09 is stored in memory.
 This is true whether the source data was also in memory or stored on disk.
 
 Exercise 2
-`Assign the result of below to a variable called `res2`
-Select payment_type and fare from the trips data for the first date.`
+`Assign the result of below to a variable called res2`
+
+`Select payment_type and fare from the trips data for the first date.`
 <details>
   <summary>Answer</summary>
 
