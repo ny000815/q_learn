@@ -214,6 +214,7 @@ select maxTip: max tip by vendor from jan09
 </code></pre>
 
 </details>
+
 `What is the highest tip and average tip per payment_type?`
 <details>
   <summary>Answer</summary>
