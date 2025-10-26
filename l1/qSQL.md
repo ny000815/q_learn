@@ -1,5 +1,5 @@
-## 1. q SQL
-### 1.1 Data exploration
+# 1. q SQL
+## 1.1 Data exploration
 
 ```q
 tables[ ]
@@ -38,8 +38,8 @@ advanced concepts for future
 
 ---
 
-## 2. qSQL
-### 2.1 Basics
+# 2. qSQL
+## 2.1 Basics
 
 ```q
 select date, month, vendor, passengers, fare, tip, fare+tip from trips 
@@ -56,7 +56,7 @@ date       month   vendor passengers fare tip   tip1
 /if "fare+tip" was "tip + fare", tip1 would be fare1
 ```
 
-#### Structure: columnar database
+### Structure: columnar database
 |-2020.01.01 - trips
 
    |-a.txt
@@ -103,7 +103,7 @@ select count i from trips where date = min date, passengers < 2
 
 ---
 
-### 2.2 Assignment
+## 2.2 Assignment
 
 Create a new variable as follows:
 
@@ -146,7 +146,7 @@ show res2: select payment_type, fare from trips where date = min date
 
 ---
 
-### 2.3  Aggregations 
+## 2.3  Aggregations 
 `sum` is one of many built-in aggregations. Other built-in aggregations include, but are not limited to
 
 - avg - average (mean)
