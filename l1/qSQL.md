@@ -87,7 +87,7 @@ x
 - [qSQL syntax](https://code.kx.com/q/basics/qsql/)
 - [_Q for Mortals_ §9: Queries](https://code.kx.com/q4m3/9_Queries_q-sql/)
 
-Exercise 1
+### Exercise 1
 `On the earliest date, how many trips had fewer than two passengers?`
 <details>
   <summary>Answer</summary>
@@ -131,7 +131,7 @@ By making this assignment, the new variable jan09 is stored in memory.
 
 This is true whether the source data was also in memory or stored on disk.
 
-Exercise 2
+### Exercise 2
 `Assign the result of below to a variable called res2`
 
 `Select payment_type and fare from the trips data for the first date.`
@@ -157,7 +157,7 @@ show res2: select payment_type, fare from trips where date = min date
 
 Reference: [Mathematics and statistics](https://code.kx.com/q/basics/math/)
 
-Exercise 3
+### Exercise 3
 `Calculate the minimum and maximum tip from the `jan09` table.`
 <details>
   <summary>Answer</summary>
@@ -205,7 +205,7 @@ date      | x
 \
 ```
 
-Exercise 4
+### Exercise 4
 `What is the biggest tip for each vendor?`
 <details>
   <summary>Answer</summary>
@@ -305,7 +305,7 @@ total       | f
 ```
 
 
-Excercise 5
+### Exercise 5
 ⭐️
 `Which payment type produces the highest average tip when only trips with a fare larger than the average for each vendor is considered?`
 <details>
