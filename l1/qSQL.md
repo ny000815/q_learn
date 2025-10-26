@@ -74,7 +74,32 @@ date       month   vendor passengers fare tip   tip1
 - 1. `select date, month, vendor, passengers, fare, tip from trips where date = min date, tip > 20`
 - 2. `select date, month, vendor, passengers, fare, tip from trips where tip > 20, date = min date`
 
-usage of `i`
+### Excerpt from [Where phrase](https://code.kx.com/q/basics/qsql/#where-phrase)
+```q
+q)select from t where c2>15,c3<3.0
+c1 c2 c3
+---------
+b 20 2.2
+
+q)select from t where (c2>15) and c3<3.0
+c1 c2 c3 
+--------- 
+b 20 2.2
+
+/
+The examples above return the same result but have different performance characteristics.
+
+In the second example, all `c2` values are compared to 15, and all `c3` values are compared to 3.0. The two result vectors are ANDed together.
+
+In the first example, only `c3` values corresponding to `c2` values greater than 15 are tested.
+
+Efficient Where phrases start with their most stringent tests.
+\
+```
+
+
+
+### usage of `i`
 ```q
 select count i from trips where date = min date, passengers = 2
 
