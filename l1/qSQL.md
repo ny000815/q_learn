@@ -237,3 +237,169 @@ No Charge   | 13.35  0.006573717
 </details>
 
 
+
+## 2.4 Using `fby` to avoid nested queries
+
+```q
+// Get the average duration per vendor and save resulting table in a variable
+show resBy: select avgDuration:avg duration by vendor from jan09
+/
+vendor| avgDuration 
+------| ------------
+CMT   | 6.480017e+11
+DDS   | 7.68078e+11 
+VTS   | 7.290009e+11
+\
+// Using 'lj' to join the average duration column to our table
+show without Fby select from jan09 lj resBy where duration < avgDuration
+/
+date       month   vendor pickup_time                   dropoff_time         ..
+-----------------------------------------------------------------------------..
+2009.01.10 2009.01 VTS    2009.01.10D00:00:00.000000000 2009.01.10D00:08:00.0..
+2009.01.10 2009.01 VTS    2009.01.10D00:00:00.000000000 2009.01.10D00:04:00.0..
+2009.01.10 2009.01 VTS    2009.01.10D00:00:00.000000000 2009.01.10D00:02:00.0..
+..
+\
+```
+
+In q, this can be simply expressed using [`fby`](https://code.kx.com/q/ref/fby/).
+```q
+show withFby select from jan09 where duration < (avg;duration) fby vendor
+/
+date       month   vendor pickup_time                   dropoff_time         ..
+-----------------------------------------------------------------------------..
+2009.01.10 2009.01 VTS    2009.01.10D00:00:00.000000000 2009.01.10D00:08:00.0..
+2009.01.10 2009.01 VTS    2009.01.10D00:00:00.000000000 2009.01.10D00:04:00.0..
+2009.01.10 2009.01 VTS    2009.01.10D00:00:00.000000000 2009.01.10D00:02:00.0..
+..
+\
+withoutFby~withFby
+/
+0b
+\
+meta withoutFby
+meta withFby
+/
+c           | t f a
+------------| -----
+date        | d    
+month       | m    
+..  
+tolls       | f    
+total       | f    
+avgDuration | f    
+c           | t f a
+------------| -----
+date        | d    
+month       | m    
+..
+tolls       | f    
+total       | f
+\
+
+(delete avgDuration from withoutFby)~withFby
+
+/
+1b
+\
+```
+
+
+Excercise 5
+⭐️
+`Which payment type produces the highest average tip when only trips with a fare larger than the average for each vendor is considered?`
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/x
+select tip by where fby avg payment_type from jan09
+select tip where fby (tip > avg tip) by payment_type from jan09
+select from jan09 where tip > (avg;tip) fby payment_type
+select from jan09 where fare > (avg;fare) fby vendor
+
+/o
+res7a:select avg tip by payment_type from jan09 where fare > (avg;fare) fby vendor;
+show res7a;
+select payment_type from res7a where tip = max tip 
+/
+payment_type| tip        
+------------| -----------
+CASH        | 0.001723333
+CREDIT      | 3.004373   
+Dispute     | 0.02912136 
+No Charge   | 0.0112184
+payment_type
+------------
+CREDIT      
+\
+
+/? (the position of from affects the column name)(Also show + assignment is done later)
+select payment_type where tip = max tip from res7a
+payment_type| tip        
+------------| -----------
+CASH        | 0.001723333
+CREDIT      | 3.004373   
+Dispute     | 0.02912136 
+No Charge   | 0.0112184  
+ooooooo
+tip   
+------
+CREDIT
+</code></pre>
+
+</details>
+
+⭐️
+`Which vendor has the largest number of trips when only considering trips shorter than the average duration for each vendor?`
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/x
+select sum trips by vendor where duration > (avg;duration) fby vendor from jan09 
+select from jan09 where duration < (avg;duration) fby vendor 
+
+show res8a:select count i from jan09 by vendor  where duration < (avg;duration) fby vendor 
+/
+error(if "from jan 09" and by vendor are opposite, it would work)
+\
+
+/▲
+res8a:select from jan09 where duration < (avg;duration) fby vendor; 
+res8b:select count i duration by vendor from res8a;
+select vendor from res8b where duration = max duration;
+/
+vendor
+------
+VTS   
+date       month   vendor pickup_time                   dropoff_time         ..
+-----------------------------------------------------------------------------..
+2009.01.10 2009.01 VTS    2009.01.10D00:00:00.000000000 2009.01.10D00:08:00.0..
+2009.01.10 2009.01 VTS    2009.01.10D00:00:00.000000000 2009.01.10D00:04:00.0..
+..
+vendor| duration
+------| --------
+CMT   | 2883225 
+DDS   | 402781  
+VTS   | 3592460
+\
+
+
+/o
+res7b:select count i by vendor from jan09 where duration < (avg;duration) fby vendor;
+show res7b;
+select vendor from res7b where x = max x
+/
+vendor| x      
+------| -------
+CMT   | 2883225
+DDS   | 402781 
+VTS   | 3592460
+vendor
+------
+VTS
+\
+
+</code></pre>
+
+</details>
+
