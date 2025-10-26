@@ -403,3 +403,169 @@ VTS
 
 </details>
 
+
+## 2.5 Updating existing data
+
+#### update
+```q
+// Find all records where the number of passengers is greater than 5
+select passengers from jan09 where passengers > 5
+/
+passengers
+----------
+6         
+6         
+6         
+6
+..
+\
+
+jan09: update passengers: 5 from jan09 where passengers > 5
+select passengers from jan09 where passengers > 5
+/
+passengers
+----------
+\
+
+jan09:update wAvgfare:passengers wavg fare from jan09
+meta jan09 //new column has been added to the end of the table
+/
+c           | t f a
+------------| -----
+date        | d    
+month       | m    
+..  
+total       | f    
+wAvgfare    | f
+\
+```
+
+#### delete
+```q
+count jan09  //number of records before deleting rows
+jan09:delete from jan09 where duration=00:00:00.000
+count jan09  //number of records after deleteing rows 
+/
+10420159
+10357181
+\
+```
+
+## 2.6 Temporal Arithmetic(Math for time)
+
+#### Casting
+The `pickup_time` column in the data has a type of _timestamp_. As an example, we could convert the `pickup_time` values to their `minute` values (including hours and minutes), and group the data based on this time frame.
+```q
+/2way: a.b  or `b$a
+select pickup_time, pickup_time.second, pickup_time.minute, `minute$pickup_time, pickup_time.hh from jan09
+/
+pickup_time                   second   minute pickup_time1 hh
+-------------------------------------------------------------
+2009.01.10D00:00:00.000000000 00:00:00 00:00  00:00        0 
+2009.01.10D00:00:00.000000000 00:00:00 00:00  00:00        0
+..
+\
+```
+
+#### Order of Calculation
+: sum fare + tip
+This expression highlights an important feature of q syntax: **evaluation is from right-to-left**. The argument of `sum` is everything to its right, that is `fare` plus `tip. This simple rule holds everywhere; there are no priorities to remember.
+
+```q
+select total:sum fare + tip by pickup_time.minute from jan09
+/
+minute| total   
+------| --------
+00:00 | 81488.5 
+00:01 | 81328.4
+..
+\
+
+select total:(sum fare) + tip by pickup_time.minute from jan09 
+/
+minute| total                                                                ..
+------| ---------------------------------------------------------------------..
+00:00 | 77289.95 77289.95 77289.95 77289.95 77291.95 77289.95 77292.95 77293...
+00:01 | 77106.05 77111.4 77106.05 77106.05 77106.05 77106.05 77108.05 77108.0..
+..
+\
+```
+
+#### [xbar](https://code.kx.com/q/ref/xbar/)
+```q
+/returns y rounded down to the nearest multiple of x. 
+3 xbar 1 1 3 5 7 8 13
+/
+0 0 3 3 6 6 12
+\
+
+select count i by 60 xbar pickup_time.minute from jan09 where date = 2009.01.10
+/
+minute| x    
+------| -----
+00:00 | 28975
+01:00 | 24007
+02:00 | 20202
+03:00 | 15472
+04:00 | 9721
+\
+```
+### Exercise 6
+`Show the largest tip for each 15-minute timespan during the month of January.`
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/x
+select max tip from jan09 15 xbar pickuptime.minute 
+select max tip by 15 xbar pickup_time.minute from jan09 where date.month within 2009.01
+/
+minute| tip
+------| ---
+\
+
+/o
+
+
+select max tip by 15 xbar pickup_time.minute from jan09 where date within 2009.01.10 2009.01.31
+/
+minute| tip  
+------| -----
+00:00 | 90   
+00:15 | 68   
+00:30 | 62
+\
+</code></pre>
+
+</details>
+
+`Break this information down by vendor.`
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/x
+select max tip by vendor, 15 xbar pickup_time.minute from jan09 
+/
+vendor minute| tip  
+-------------| -----
+CMT    00:00 | 35   
+CMT    00:15 | 55   
+CMT    00:30 | 39.98
+CMT    00:45 | 55.33
+\
+
+/o
+select max tip by 15 xbar pickup_time.minute, vendor from jan09 
+/
+minute vendor| tip  
+-------------| -----
+00:00  CMT   | 35   
+00:00  DDS   | 23.2 
+00:00  VTS   | 90   
+00:15  CMT   | 55   
+00:15  DDS   | 55   
+00:15  VTS   | 68   
+..
+\
+</code></pre>
+
+</details>
