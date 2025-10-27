@@ -1,6 +1,6 @@
 # 4. Lists
 
-### 4.1 Data types
+## 4.1 Data types
 h is suffix for indicating data types
 ```q
 vtsfares:select fare from trips where date = 2009.01.01, vendor=`VTS
