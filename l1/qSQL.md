@@ -141,8 +141,8 @@ select count i from trips where date = min date, passengers < 2
 ---
 
 ## 2.2 Assignment
-
-Create a new variable as follows:
+Q is a dynamically typed language.
+Createing a new variable as follows:
 
 var_name: expression
 ```q
