@@ -1,6 +1,6 @@
 # 3. Joins
 
-#### Review
+### Review
 ### exercise 7
 `Display the max and min temperatures for NYC each week through January (For this query a week is just every 7 days)`
 
