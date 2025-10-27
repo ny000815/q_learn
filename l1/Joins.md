@@ -51,7 +51,7 @@ date      | trips
 \
 ```
 
-ooking more closely at `jan09C`, it doesn't look like a normal kdb+ table as there is a vertical line appearing between the columns `date` and `x`. This informs us that this table is actually a **keyed table** which we require to have in most kdb+ joins. But how do we create keyed tables explicitly ? Well, we have two choices:
+looking more closely at `jan09C`, it doesn't look like a normal kdb+ table as there is a vertical line appearing between the columns `date` and `x`. This informs us that this table is actually a **keyed table** which we require to have in most kdb+ joins. But how do we create keyed tables explicitly ? Well, we have two choices:
 
 1. Using the syntax above - we can use a by clause
 2. Using [xkey](https://code.kx.com/q/ref/keys/#xkey) or [!(bang)](https://code.kx.com/q/ref/enkey/)
