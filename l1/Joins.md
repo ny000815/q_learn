@@ -156,3 +156,162 @@ date      | trips  avgtemp
 
 </details>
 
+## As-of Join
+`aj[matching columns;t1;t2]` - [aj join](https://code.kx.com/q/ref/aj/)
+
+Let's say there are three reports from individuals who lost their phone or wallet. These individuals were picked up shortly before the time in question and mentioned how many passengers were in the taxi. Which vendor were they riding with?
+
+⭐️
+```q
+/ Creating table by ([] ...)
+timetab:([] passengers:1 2 3; event_time:2009.01.06D03:30:00+00:30*til 3)
+timetab
+/
+passengers event_time                   
+----------------------------------------
+1          2009.01.06D03:30:00.000000000
+2          2009.01.06D04:00:00.000000000
+3          2009.01.06D04:30:00.000000000
+\
+
+select passengers, event_time:pickup_time, vendor, pickup_time from jan09
+/
+passengers event_time                    vendor pickup_time                  
+-----------------------------------------------------------------------------
+1          2009.01.01D00:00:00.000000000 CMT    2009.01.01D00:00:00.000000000
+2          2009.01.01D00:00:00.000000000 CMT    2009.01.01D00:00:00.000000000
+1          2009.01.01D00:00:02.000000000 CMT    2009.01.01D00:00:02.000000000
+1          2009.01.01D00:00:04.000000000 CMT    2009.01.01D00:00:04.000000000
+..
+\
+
+aj[`passengers`event_time;
+	timetab;
+	select passengers, event_time:pickup_time, vendor, pickup_time from jan09]
+/
+passengers event_time                    vendor pickup_time                  
+-----------------------------------------------------------------------------
+1          2009.01.06D03:30:00.000000000 VTS    2009.01.06D03:30:00.000000000
+2          2009.01.06D04:00:00.000000000 VTS    2009.01.06D04:00:00.000000000
+3          2009.01.06D04:30:00.000000000 CMT    2009.01.06D04:29:22.000000000
+\
+
+//Which line was selected from original table (for the 3rd line)?
+select passengers, event_time:pickup_time, vendor, pickup_time from jan09 where pickup_time > 2009.01.06D04:29:00.000000000
+/
+passengers event_time                    vendor pickup_time                  
+-----------------------------------------------------------------------------
+1          2009.01.06D04:29:01.000000000 CMT    2009.01.06D04:29:01.000000000
+1          2009.01.06D04:29:04.000000000 CMT    2009.01.06D04:29:04.000000000
+1          2009.01.06D04:29:05.000000000 CMT    2009.01.06D04:29:05.000000000
+1          2009.01.06D04:29:05.000000000 CMT    2009.01.06D04:29:05.000000000
+1          2009.01.06D04:29:07.000000000 CMT    2009.01.06D04:29:07.000000000
+1          2009.01.06D04:29:11.000000000 CMT    2009.01.06D04:29:11.000000000
+1          2009.01.06D04:29:16.000000000 CMT    2009.01.06D04:29:16.000000000
+1          2009.01.06D04:29:17.000000000 CMT    2009.01.06D04:29:17.000000000
+🌟3          2009.01.06D04:29:22.000000000 CMT    2009.01.06D04:29:22.000000000
+1          2009.01.06D04:29:30.000000000 CMT    2009.01.06D04:29:30.000000000
+1          2009.01.06D04:29:32.000000000 CMT    2009.01.06D04:29:32.000000000
+2          2009.01.06D04:29:36.000000000 DDS    2009.01.06D04:29:36.000000000
+2          2009.01.06D04:29:37.000000000 CMT    2009.01.06D04:29:37.000000000
+1          2009.01.06D04:29:39.000000000 CMT    2009.01.06D04:29:39.000000000
+2          2009.01.06D04:29:40.000000000 CMT    2009.01.06D04:29:40.000000000
+1          2009.01.06D04:29:40.000000000 CMT    2009.01.06D04:29:40.000000000
+1          2009.01.06D04:29:52.000000000 CMT    2009.01.06D04:29:52.000000000
+2          2009.01.06D04:29:55.000000000 CMT    2009.01.06D04:29:55.000000000
+1          2009.01.06D04:30:00.000000000 VTS    2009.01.06D04:30:00.000000000
+1          2009.01.06D04:30:00.000000000 VTS    2009.01.06D04:30:00.000000000
+\
+```
+The result is the record for each vendor with the event_time ≤ to the time we specified.
+
+- An `aj` join will always select the last record before the specified time.
+
+
+```q
+select by vendor from jan09
+/
+vendor| date       month   pickup_time                   dropoff_time        ..
+------| ---------------------------------------------------------------------..
+CMT   | 2009.01.31 2009.01 2009.01.31D23:59:59.000000000 2009.02.01D00:05:04...
+DDS   | 2009.01.31 2009.01 2009.01.31D23:59:58.000000000 2009.02.01D00:25:21...
+VTS   | 2009.01.31 2009.01 2009.01.31D23:59:00.000000000 2009.02.01D00:15:00...
+\
+timetab1:([] vendor:CMT DDS VTS; event_time:2009.01.31D09:30:00+00:00*til 3)
+timetab1
+aj [`vendor`event_time; timetab1; select event_time:pickup_time, vendor, pickup_time by vendor from jan09]
+
+
+/this one works
+timetab1:([] vendor:`CMT`DDS`VTS; event_time:2009.01.31D09:30:00+00:00*til 3)
+/cleaner version
+timetab1:([] vendor: `CMT`DDS`VTS; pickup_time:3#2009.01.31D09:30:00)
+
+timetab1
+/
+vendor pickup_time                  
+------------------------------------
+CMT    2009.01.31D09:30:00.000000000
+DDS    2009.01.31D09:30:00.000000000
+VTS    2009.01.31D09:30:00.000000000
+\
+
+aj [`vendor`pickup_time; timetab1; jan09]
+/
+vendor pickup_time                   date       month   dropoff_time         ..
+-----------------------------------------------------------------------------..
+CMT    2009.01.31D09:30:00.000000000 2009.01.31 2009.01 2009.01.31D09:38:56.0..
+DDS    2009.01.31D09:30:00.000000000 2009.01.31 2009.01 2009.01.31D09:35:17.0..
+VTS    2009.01.31D09:30:00.000000000 2009.01.31 2009.01 2009.01.31D09:41:00.0..
+\
+```
+
+---
+
+## Lists
+
+### Data types
+h is suffix for indicating data types
+```q
+vtsfares:select fare from trips where date = 2009.01.01, vendor=`VTS
+vtsfares
+type vtsfares
+/
+fare
+----
+5.7 
+4.9 
+4.9 
+..
+98h
+\
+
+fares: vtsfares`fare
+fares
+type fares
+/
+5.7 4.9 4.9 4.5 4.9 15.3 3.7 8.5 13.3 11.3 22.5 6.9 16.5 24.1 9.3 9.3 6.1 8.1..
+9h
+\
+
+//While simple lists always have strictly positive values returned by type, general lists always have type zero.
+general:(`VTS;23.45);
+general
+type general
+/
+`VTS
+23.45
+0h
+\
+
+//A list can be _empty_ - if there had been a typo in the select statement, and we inquired about a non-existent cab company, we would see:
+
+//if it is negative, it is scalar type
+aaabbbccc: 9.93
+type aaabbbccc
+/
+-9h
+\
+
+
+```
