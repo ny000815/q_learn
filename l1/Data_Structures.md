@@ -148,4 +148,84 @@ show sortedFares:asc fares
 \
 ```
 
+## 4.3 Obtaining random data
+
+An easy trap to fall into – we extracted an _unrepresentative sample_. To pick ten _random_ records from the list, we can use the [Roll `?` operator](https://code.kx.com/q/ref/deal/)
+```q
+sampleFares:10?sortedFares;
+sampleFares
+sampleFares[8]
+/
+30.9 4.9 4.1 5.3 8.5 6.1 5.3 4.5 12.9 7.7
+12.9
+\
+
+fares[10+til 10]
+/
+22.5 6.9 16.5 24.1 9.3 9.3 6.1 8.1 5.7 8.5
+\
+```
+
+### ⭐️Exercise 10
+Use indexing to find the middle value in the sortedFares list.
+<details>
+  <summary>Answer</summary>
+
+<pre><code>/x
+//Not sure why it needs to be cast. scala type is not suitable?
+count sortedFares
+type count fares
+sortedFares[124208%2]
+/
+124208
+-7h
+QError: type
+\
+
+/o
+sortedFares [`long$(count sortedFares)%2]
+/
+6.9
+\
+</code></pre>
+
+</details>
+
+### index
+```q
+//In the case of a simple list, if the index used is too high, a _null_ of the list’s type is returned.
+sortedFares[count sortedFares]
+sortedFares[-1+count sortedFares]  // index from 0 to N-1
+/
+0n
+200f
+\
+//The below code block will also obtain the first value from the list: 
+1 sublist sortedFares
+first sortedFares
+type 1 sublist sortedFares
+type first sortedFares
+/
+,2.5
+2.5
+9h
+-9h
+\
+
+/if is a single item from list type, it has "," at first.
+enlist 499
+(),499
+(),499 500
+type enlist 499
+type (),499
+type (),499, 500
+/
+,499
+,499
+499 500
+7h
+7h
+7h
+\
+```
 
