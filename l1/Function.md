@@ -1,7 +1,7 @@
 # 5. Functions
 
 
-### 5.1 Function Usage
+## 5.1 Function Usage
 calling & defining function
 ```q
 max[10 11 12]  // functional notation
@@ -51,10 +51,57 @@ error {
 \
 
 /o
-res:{neg (y*(1+x) xexp 2) %-1+2*1+x}
+res:{
+    a:y*xexp[x+1;2];
+    b:-1+2*x+1;
+    neg a%b
+    }
 res[10;5]
 /
 -28.5
 \
 ```
+
+### Explicit and Implicit parameters
+```q
+speed:{[miles;hours] //explicit parameters
+ 1.609*miles%hours 
+ }
+
+speed:{1.609*x%y} //implicit parameters
+```
+
+### Call functions from qSQL
+```q
+jan09:select from trips where date within 2009.01.01 2009.01.07
+select spd:speed[distance;duration % 0D01:00],distance,duration from jan09 where vendor = `VTS
+/
+spd      distance duration             
+---------------------------------------
+48.5918  1.51     0D00:03:00.000000000 
+-17.3772 1.26     -0D00:07:00.000000000
+14.28792 0.74     0D00:05:00.000000000 
+16.8945  0.7      0D00:04:00.000000000
+..
+\
+/ Combined version
+select avgspeed:speed[sum distance;sum[duration]%0D01:00] by vendor from jan09
+
+
+```
+We use `duration % 0D01:00` to give us a number of hours as a floating point number from the nanosecond precision duration we have stored in the trips table.
+### Exercise 
+Write a function `createTable` that selects from `jan09` the columns `vendor`, `distance`, and `tip`; and adds a new column from the result of `tipOverDistance` applied to columns `tip` and `distance`.
+```q
+/x??
+createTable:{
+    select  tipPerDistance:tipOverDistance[tip;distance], vendor, distance, tip from jan09;
+    }
+createTable
+/
+{
+    select  tipPerDistance:tipOverDistance[tip;distance], vendor, distance, t..
+    }
+```
+
 
