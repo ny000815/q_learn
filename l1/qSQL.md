@@ -288,7 +288,7 @@ DDS   | 7.68078e+11
 VTS   | 7.290009e+11
 \
 // Using 'lj' to join the average duration column to our table
-show without Fby select from jan09 lj resBy where duration < avgDuration
+show withoutFby: select from jan09 lj resBy where duration < avgDuration
 /
 date       month   vendor pickup_time                   dropoff_time         ..
 -----------------------------------------------------------------------------..
