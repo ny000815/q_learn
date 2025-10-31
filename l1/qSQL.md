@@ -1,15 +1,7 @@
 # 1. q SQL
-### Learning objectives
-
-To understand:
-
-- How to construct a qSQL query
-- How to assign a variable
-- Useful inbuilt aggregations
-- Grouping with by
-- Using fby to avoid nested queries
-- Updating existing data
-- Temporal arithmetic
+### Review points
+- 
+- 
 
 ## 1.1 Data exploration
 
