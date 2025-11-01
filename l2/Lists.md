@@ -29,6 +29,7 @@ a b c
 show sList:(),`onMyOwn
 ```
 
+# 3. List creation
 generate numbers without replacement
 ```q
 ?[-5;10]
@@ -50,8 +51,50 @@ date version
 \
 ```
 
+# 4. List indexing and access
+The type of the null value at out bound of general list is defined by the first item's type
+```q
+show GList:(1;2;`Real)
+GList 10
+show GList2:(3e;1)
+GList2 4
+/
+0N
+0Ne
+1
+2
+`Real
+3e
+1
+\
+```
 
+cut & matrix
+```q
+show matrix: 4 cut 3* til 9 
+matrix[1]    //the first item of our matrix is the first "row"
+/
+12 15 18 21
+0 3 6 9
+12 15 18 21
+,24
+\
+matrix[0;1 2] // or matrix[0][1 2]
+/
+3 6
+\
 
+show matrix: 3* 3 cut til 9
+matrix[0 1 2;0]
+matrix[;0]
+`
+/
+0 9 18
+0 9 18
 
-
+0 3 6
+9 12 15
+18 21 24
+\
+```
 
