@@ -1,6 +1,43 @@
 # 3. Joins
+### Review Points
+- 3 way to key table
+- a way to unkey
 
-### Review
+Usage of
+lj (which one  need to be keyed?)
+aj
+
+lj
+```q
+/x
+show jan09Y: select count i by date from jan09 lj select avgtemp by date from weather
+/xkeyの時は、dateを二回書くが、byの時はそれ自体をselectする必要はない。
+
+/o
+show jan09Y: (select count i by date from jan09) lj (select avgtemp by date from weather)
+```
+
+aj
+```q
+//2examples
+aj[`passengers`event_time;timetab;select passengers, event_time:pickup_time, vendor, pickup_time from jan09]
+
+aj[`passengers`event_time;timetab;select passengers, event_time:pickup_time, vendor, pickup_time from jan09]
+
+```
+
+Exercise
+`timetab:([] vendor: `VTS`DDS`CMT; pickup_time:3#2009.01.31D09:30:00)
+aj[`vendor`pickup_time;timetab;jan09]`
+```q
+/x
+vendortab: select pickup_time, date by vendor where date = min date;
+aj[`vendor`pickup_time;timetab; select vendor, event_time:pickup_time, date, pickup_time from jan09]
+/o
+timetab:([] vendor: `VTS`DDS`CMT; pickup_time:3#2009.01.31D09:30:00)
+aj[`vendor`pickup_time;timetab;jan09]
+```
+
 ### exercise 7
 `Display the max and min temperatures for NYC each week through January (For this query a week is just every 7 days)`
 

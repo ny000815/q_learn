@@ -1,7 +1,31 @@
 # 1. q SQL
-### Review points
-- 
-- 
+### Review Points
+Usage of
+- fby
+- update delete
+- xbar
+
+fby
+
+select a b c from jan09 where fby (avg tuition;)>tuition by vendor
+select from jan09 where ==duration < (avg;duration) fby vendor==
+
+jan09: update select tuition = 5 from jan09 where tuition > 5;
+jan09: update select tuition ==:== 5 from jan09 where tuition > 5;
+
+jan09: delete from jan09 from jan09 where date within 2020.01.01 2020.01.15
+jan09: delete from jan09 ==== where date within 2020.01.01 2020.01.15
+
+3 xbar 1 2 3 4 5 7 
+/0 0 3 3 3 6
+
+select time.minute, vendor by xbar 15 from jan09 
+select ==max tip== by ==15 xbar pickuup_time.minute== from jan09;
+select max maxtemp, min mintemp by 7 xbar date from weather
+
+//
+select count i by date from jan09
+ 
 
 ## 1.1 Data exploration
 
