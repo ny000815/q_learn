@@ -98,3 +98,136 @@ matrix[;0]
 \
 ```
 
+
+# ⭐️5. List Manipulation
+[`#`](https://code.kx.com/q/ref/take/) (referred to as [take](https://code.kx.com/q/ref/take/)) is used to retrieve the first or last N elements of a list.
+```q
+L
+3#L
+-3#L
+/
+10 20 30 40 50
+10 20 30
+30 40 50
+\
+
+```
+
+Alternatively, by using the keyword [`_`](https://code.kx.com/q4m3/A_Built-in_Functions/#a20-cut-_) (referred to as [cut/drop](https://code.kx.com/q4m3/A_Built-in_Functions/#a20-cut-_) ), we can remove the first or last N elements of a list to return just the remainder of the list.
+```q
+2_L
+-2_L
+/
+30 40 50
+10 20 30
+\
+```
+
+[`sublist`](https://code.kx.com/q/ref/sublist/)
+```q
+2 3 sublist 1 2 3 4 5
+2 6 sublist "KDB is fun"
+/
+3 4 5
+B is f
+\
+```
+
+difference between # and sublist
+```q
+8#til 5
+8 sublist til 5
+8 sublist 5
+/
+0 1 2 3 4 0 1 2
+0 1 2 3 4
+5
+\
+```
+
+### ⭐️Ex
+`The second from last item of L
+`The next 2 items starting from the 2nd item from L`
+```q
+first -2#L  //same as 1#-2#L
+(-2#L) 0         //using indexing to get the first of the last two items
+L[-2 + count L]  //using indexing directly on L to move 2 back from the end of the list
+
+
+1 2 sublist L   //using sublist 
+L[1+ til 2]     //using direct indexing 
+2#1_L           //dropping the first item then taking the first 2
+```
+
+Finding item in lists
+Using ? but different from the random num generator one.
+? is to find ==first== one
+```q
+//Different from these
+?[5;1 4 5 5 6 7]   //generate 5 items drawn randomly from the passed list
+5?1 4 5 5 6 7      //infix - generate 5 items from the list 
+
+/
+5 7 5 5 7
+7 5 6 4 4
+\
+
+?[1 4 5 5 6 7;5]     //first occurance of 5
+1 4 5 5 6 7?5        //infix - where is the first occurance of 5 in this list
+/
+2
+2
+\
+?[1 4 5 5 6 7;5 1]   //first occurance of 5 and 1 
+1 4 5 5 6 7?5 1 
+/
+2 0
+2 0
+\
+
+```
+where
+```q
+where 101010b
+/
+0 2 4
+\
+show L:10?50
+L >30
+where L >30
+/
+0000101001b
+4 6 9
+22 6 28 9 31 29 38 10 21 38
+\
+L[where[L>=30]]
+/31 38 38
+```
+
+### ⭐️Ex
+`Return the items of L that are divisible by 3.`
+```q
+//reverse way to think. Not to seek one by one. creating boolean list
+L
+0 = L mod 3
+L where 0 = L mod 3
+/
+22 6 28 9 31 29 38 10 21 38
+0101000010b
+6 9 21
+\
+```
+`Given the list 1 1 2 3 1 1 2 3, find The index of first occurrence of 3`
+```q
+ListA:1 1 3 1 1 2 3
+ListA?3
+/
+2
+\
+//All index occurrences of 3?
+where ListA=3
+/
+2 6
+\
+// Regarding return type, ? always return atomic and = always return list
+```
