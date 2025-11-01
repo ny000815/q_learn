@@ -60,7 +60,7 @@ pairMovingSum :{ msum[2]}
 parMovingSume{[x]
 	msum[2;x]
 }
-⭐️
+⭐️❤️
 //without msum ver. utilizing list + list & droping(_)
 pairMovingSum:{ x + 0, -1 _ x }
 
