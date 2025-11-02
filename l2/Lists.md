@@ -302,6 +302,7 @@ t6 where c = max c:count each t6
 # 7. 
 ### ⭐️❤️Ex
 `Given the list a:10 20 1 15 102 3 8 40 3e of reals, updices in list x
+```q
 @[L;where L>25;10+] //add 10 to any indice in list x which is greater 25
 //same as @[L;where L>25;+;10]
 /
