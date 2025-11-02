@@ -23,31 +23,50 @@ symbol
 
 
 type 6%3
+
 floor
+
 in
+
 logic to detect weekend day by using mod and in
+
 difference between = & ~
+
 mavg
 
+
 6%3      //division with longs will return a float 
+
 2f
+
 
 floor[2000%140]
 
 1 in 1 2 3 // can be in[1;1 2 3]
+
 1 4 in 1 2 3
 
 1b
+
 10b
+
 
 (.z.d mod 7) in 0 1 //In kdb+/q the week "starts" on a Saturday.
 
+
 = value match 
+
 ~ exact match 
+
 1 2 3=1 2.0 3   // when dealing with lists, = compares the lists item-wize
+
 1 2 3~1 2.0 3   // even with lists, ~ always returns a single true or false
+
 111b
+
 0b
+
+
 
 # Variables & Assignment
 
