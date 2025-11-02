@@ -231,3 +231,147 @@ where ListA=3
 \
 // Regarding return type, ? always return atomic and = always return list
 ```
+ate the value of every second item to be null.`
+ ```q
+show a:10 20 1 15 102 3 8 40 3e
+show i:1+2* til div[count a;2]   //getting the odd indexes - div is integer division
+/
+This would be 3.5 and unexpected input.
+show i: 1+2* til count a % 2
+\
+a[i]:0Ne      //updating - have to use the real type null as the list itself is typed
+a
+ ```
+
+Amendment using  [`@`](https://code.kx.com/q/ref/amend/)
+```q
+show L: 10?20
+@[L; 1 2]
+/
+8 17
+17 8 17 19 12 14 2 18 16 13
+\
+@[L; ::; neg]    //amend the list to apply single argument function 
+@[L; ::; + ; 2]  //amend the list at the null index (all indexes) to add 2 to each 
+L 
+/
+-17 -8 -17 -19 -12 -14 -2 -18 -16 -13
+19 10 19 21 14 16 4 20 18 15
+17 8 17 19 12 14 2 18 16 13
+\
+
+L
+show L:@[L;0 1;10+] //add 10 to the first two ind
+```q
+show L:30 0N 10 20 50 30 60 30 40 50
+maxs L
+mins L  
+avgs L 
+sums L 
+/
+30 30 30 30 50 50 60 60 60 60
+30 30 10 10 10 10 10 10 10 10
+30 30 20 20 27.5 28 33.33333 32.85714 33.75 35.55556
+30 30 40 60 110 140 200 230 270 320
+30 0N 10 20 50 30 60 30 40 50
+\
+```
+
+### ⭐️Ex
+`Create a string list t6 similar to above saying-- ("Welcome";"to";"KDB").
+`Using the built-in functions above, deduce and return the word with the most letters.`
+`HINT: (you may wish to use the iterator each to apply count to every item in the list)``
+```q
+/x
+t6 where max count each t6
+/o
+t6 where c = max c:count each t6
+```
+
+# 6. List comparison
+```q
+`b`b`c=(`a`b`c)
+(1;2;3;4;5)=(5;2;3;2;1)
+/
+011b
+01100b
+\
+
+```
+
+# 7. 
+### ⭐️❤️Ex
+`Given the list a:10 20 1 15 102 3 8 40 3e of reals, updices in list x
+@[L;where L>25;10+] //add 10 to any indice in list x which is greater 25
+//same as @[L;where L>25;+;10]
+/
+13 25 41 38 6 27 25 46 30 32
+23 45 51 48 6 37 25 56 40 42
+23 35 41 38 6 27 25 46 30 32
+\
+```
+_The identity `::` in kdb+/q serves two purposes - it is both a [generic null](https://code.kx.com/q/ref/identity/#null) (for any type) and also as an identity function (see Functions section). In the example above we are using it as the generic null to indicate we selected no indexes in particular. The following statements are equivalent 
+- `L[::]`
+- `L[]`
+- `L`
+
+?
+What would happen if we didn't use the null and instead just called `@[L; ; + ; 2]`?
+>> We would create a projection! Similar to `+[;2]` or `mavg[2;]`
+
+Add 300 to every item in the list L that is [`within`](https://code.kx.com/q/ref/within/) the range 10-15
+```q
+@[L;where L within 10 15; 300+]
+L within 10 15
+where L within 10 15
+L
+/
+8 36 23 37 36 4 4 310 49 23
+0000000100b
+,7
+8 36 23 37 36 4 4 10 49 23
+\
+//realized this is not where for condition where for finding the place
+```
+
+Amendment using [`.`](https://code.kx.com/q/ref/apply/#apply-index)(aka [apply-index](https://code.kx.com/q/ref/apply/#apply-index)).
+```q
+matrix
+matrix . 1 2     // same as matrix[1;2]
+matrix . (::;0)   // same as matrix[::;0] //::meaning all
+/
+1 2 3
+4 5 6
+6
+1 4
+\
+.[matrix; 0 1]             //equivalent to matrix[0;1]
+.[matrix; 0 1; : ; 500 ]   //we can now update at depth
+matrix
+/
+2
+1 500 3
+4 5   6
+
+1 2 3
+4 5 6
+\
+```
+
+### ⭐️Ex
+Use indexing at depth on ("nuf";"BDK";" si") to make
+
+"KDB"
+"is "
+"fun"
+```q
+("nuf";"BDK";" si") . (1 2 0;2 1 0)
+.[("nuf";"BDK";" si");(1 2 0;2 1 0)]  //functional syntax
+/
+"KDB"
+"is "
+"fun"
+\
+```
+
+
