@@ -376,3 +376,85 @@ Use indexing at depth on ("nuf";"BDK";" si") to make
 ```
 
 
+# Practical Guidance
+## PG1 enlist vs (),
+- **`enlist` always wraps the value one more level** (creates an additional layer of nesting).
+- **`(),x` guarantees the result is a list** without increasing the nesting level of an existing list.
+- When in doubt and you **don’t want to introduce extra nesting**, use **`(),x`** to avoid unexpected structures.
+```q
+a: 1 2          / 1 2 is a list of longs (type 7h)
+enlist a
+// ,1 2          Becomes a nested list: a list containing the list 1 2
+(),a
+// 1 2           Remains the same structure as the original list
+type enlist a    / Since it's now a list of lists, it becomes a general list = 0h
+// 0h
+type (),a       / Keeps the original type (here, long list) = 7h
+// 7h
+```
+
+## PG2 Fill Operator
+```q
+show g:1 2 0N 0N 3 4 0N
+1^g                          //replace any nulls with 1
+/
+1 2 1 1 3 4 1
+1 2 0N 0N 3 4 0N
+\
+avg[g]^g
+//1 2 2.5 2.5 3 4 2.5
+
+//replace with list
+g                                 //list with some null values 1 2 0N 0N 3 4 0N
+show k:10 20 30 40 50 60 70       //list without null values
+k^g                               //Replace nulls in g with corresponding values from k
+/
+1 2 0N 0N 3 4 0N
+1 2 30 40 3 4 70
+10 20 30 40 50 60 70
+\
+
+//replcae with previous non null value
+show g:1 2 0N 0N 3 4 0N
+fills g
+/
+1 2 0N 0N 3 4 0N
+1 2 2 2 3 4 4
+\
+//To replace with following non null value
+reverse fills reverse g
+//1 2 3 3 3 4 0N
+```
+
+## PG3 Textual data
+list of list is general list.
+"string" is char list so string list is general list
+```q
+type A:("a";"a")
+type AB:("a";"ab")
+/
+10h
+0h
+\
+```
+
+# PG4 Common error debug
+to check the length of the lists, using bracket for multiple input for func `each`
+```
+count each (l1;l2)
+```
+
+list type error
+```q
+l1
+@[l1;2;%;2] //amend list 1 at index 2 to divide by 2  - fails because resultant type is a float 
+/
+0 1 2 
+QError: type
+\
+//These can work
+@[l1;2;div;2]
+0 1 1
+```
+
+
