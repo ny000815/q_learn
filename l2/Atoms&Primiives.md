@@ -34,6 +34,7 @@ difference between = & ~
 
 mavg
 
+---
 
 6%3      //division with longs will return a float 
 
