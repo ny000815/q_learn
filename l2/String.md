@@ -278,3 +278,51 @@ ssr[;"_";" "] @[a;0,1+where a="_";upper]
 
 ```
 
+❤️⭐️
+Starting with variable s which contains the strings ("wK<<<De<<< arB33e &:n";"Ia<<< quSe<<<sGREATt!"), apply the following manipulations:
+- Replace all occurrences of "&:" with "o"
+- Remove all occurrences of "<<<"
+- Remove all capital letters
+- Remove all numbers
+- Combine the two strings with a " " between
+```q
+show s:("wK<<<De<<< arB33e &:n";"Ia<<< quSe<<<sGREATt!")
+show s: ssr[;"&:";"o"] each s
+show s: ssr[;"<<<";""] each s
+show `
+show s:except [;.Q.nA] each s
+show s: sv[" ";s]
+//show s: ssr[;.Q.nA;""] each s
+```
+
+❤️⭐️
+Starting with variable s which contains the strings ("wK<<<De<<< arB33e &:n";"Ia<<< quSe<<<sGREATt!"), apply the following manipulations:
+- Replace all occurrences of "&:" with "o"
+- Remove all occurrences of "<<<"
+- Remove all capital letters
+- Remove all numbers
+- Combine the two strings with a " " between
+```q
+show s:("wK<<<De<<< arB33e &:n";"Ia<<< quSe<<<sGREATt!")
+show s: ssr[;"&:";"o"] each s
+show s: ssr[;"<<<";""] each s
+show `
+show s:except [;.Q.nA] each s
+show s: sv[" ";s]
+//show s: ssr[;.Q.nA;""] each s
+
+//shorter ver
+/▲
+sv[" ";] except [;.Q.nA,"<<<"] each ssr [;"&:";"o"] each s
+/shorter
+ssr[;"&:";"o"] except[;"<",.Q.nA] " " sv s  
+
+```
+
+Return the filename from this filepath: `"/mount/folder1/moreFolder/myfile.txt"`
+Return the path from this filepath: `"/mount/folder1/moreFolder/myfile.txt"`
+```q
+last vs["/";"/mount/folder1/moreFolder/myfile.txt"]
+
+sv["/";] -1_ vs["/"; "/mount/folder1/moreFolder/myfile.txt"]
+```
