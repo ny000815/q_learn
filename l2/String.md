@@ -1,37 +1,3 @@
- message format)
-\
-
-```
-\n
-```q
-//-1 writes to standard out with a carraige return (\n) meaning the next comment will be on the new line
-
-x:0 
-while[x<3; 
-    1 "Starting with parameter ",string[x];
-    -1 " ... Finished";             
-    x:x+1;              //incrementing x
-    ]
-/
-Starting with parameter 0 ... Finished
-Starting with parameter 1 ... Finished
-Starting with parameter 2 ... Finished
-\
-x:0 
-while[x<3; 
-    -1 "Starting with parameter ",string[x];
-    -1 " ... Finished";             
-    x:x+1;              //incrementing x
-    ]
-/
-Starting with parameter 0
- ... Finished
-Starting with parameter 1
- ... Finished
-Starting with parameter 2
- ... Finished
-\
-```
 
 # String Manipulation
 # 1.  Learning Objective
@@ -172,7 +138,9 @@ example
 examp
 ample
 \
-
+```
+casting
+```q
 `small~lower `SMALL
 "BIG"~upper "big"
 upper " KDB is Fun ! " 
