@@ -69,3 +69,10 @@ show tms: tm + .z.d  //can make this a timestamp again by adding a date
 00:00:00.049 00:00:00.050 00:00:00.058 00:00:00.051 00:00:00.048 00:00:00.058..
 |
 ```
+
+- Split the string `"casting all day every day"` to a list of symbols: `` `casting`all`day`every`day ``
+```q
+` $ " " vs "casting all day every day"
+```
+
+
