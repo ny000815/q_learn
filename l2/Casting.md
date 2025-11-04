@@ -41,3 +41,31 @@ symbol can be casted only to string
 -7h $ string `0`1`2`3
 0 1 2 3
 ```
+# Ex
+time
+```q
+`uu $ .z.t /minute
+`ss $ .z.t /second
+`hh $ .z.t /hour
+
+show ts: .z.p
+show tm: `time$ts
+show tms:"p"$tm   //we can't convert this back like this! What date should this be? 
+/
+2020.07.23D13:56:02.113141000
+13:56:02.113
+errorr
+\
+show tms: tm + .z.d  //can make this a timestamp again by adding a date 
+/2020.07.21D18:12:51.648000000
+```
+
+ Use capital letters when casting strings
+```q
+`second $"T"$"12:30:00"
+`second $"t"$"12:30:00"
+/
+12:30:00.000
+00:00:00.049 00:00:00.050 00:00:00.058 00:00:00.051 00:00:00.048 00:00:00.058..
+|
+```
