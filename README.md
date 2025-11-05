@@ -79,3 +79,5 @@
 | Exploring Design Components | |
 | Advanced Querying | |
 | Preparing for Publication | |
+
+### 💡 q Tips
