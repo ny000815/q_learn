@@ -22,7 +22,7 @@
 | 02 Lists | ✅ |
 | 03 String Manipula... | ✅ |
 | 04 Cast | ✅ |
-| 05 Functions | |
+| 05 Functions | ✅ |
 | 06 Iterators | |
 | 07 Execution Control | |
 | 08 Scripting And L... | |
