@@ -53,7 +53,7 @@ if[not -19h=type var1;
 var1
 ```
 
-条件分書き方
+conditional statement mistake
 ```q
 /x
 type x = -11h
