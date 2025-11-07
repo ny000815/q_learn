@@ -134,3 +134,51 @@ deltas 2 1 2 3 60 62 62 //same result as above but another different syntax
 deltas 200 300 100 500 400 200 100 -200 400 -100 
 ```
 
+# Ex
+
+roll with each left
+```q
+rockList:(`i`love`rockandroll)
+numerialList:(1 4 3 2)
+numerialList?\:rockList
+/
+,`love
+`love`i`rockandroll`love
+`love`love`love
+`rockandroll`rockandroll
+\
+
+?[;rockList]:/numerialList //why this doensn't work..
+/ 2
+```
+
+`cor`
+```
+
+```
+---
+# PG
+reimplementation by using loops of iterators
+```q
+m:(1 2 3;3 4 5;4 5 6)   / three lists
+{i:0;a:();while[i<count x;a,:enlist any 2 3 in x[i];i+:1];a} m
+/110b 
+any each 2 3 in/: m
+/110b
+```
+???
+Pascal's triangle
+```q
+7 {(+)prior x,0}\ 1
+/
+1
+1 1
+1 2 1
+1 3 3 1
+1 4 6 4 1
+1 5 10 10 5 1
+1 6 15 20 15 6 1
+1 7 21 35 35 21 7 1
+\
+```
+
