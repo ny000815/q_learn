@@ -61,3 +61,100 @@ type x = -11h
 -11h = type x
 ```
 
+with previous topics
+```q
+//temperature Actions
+tooLow:{-2"Temperature too low - ironing ineffective"; min (0,x)}    //what should happen when too low
+tooHigh:{-2"Temperature too hot! Stop Immediately!!"};                //what should happen when too high
+justRight:(::)   //function null - do nothing when fine
+
+//temperature Thresholds 
+woolThresh: 160 170      //for wool 
+viscoseThresh: 150 180   //for viscose 
+
+//core monitor logic
+tempMonitor:{[sensorTemp;thresh]   
+                function:$[sensorTemp> thresh[1]; 
+                        tooHigh;
+                    sensorTemp < thresh[0]; 
+                        tooLow;
+                        justRight]; //since we need a function to call we do need to include here
+                 function[sensorTemp]}
+
+//projections for each material
+woolMonitor:tempMonitor[;woolThresh];
+viscoseMonitor:tempMonitor[;viscoseThresh];
+```
+type detection[❓]
+```q
+myFunc:{
+  s:$[10h=type y; y; string y];
+  $[11h=abs type x; lower s; s]
+}
+```
+
+ternary operator for lists[❓]
+```q
+/x
+myFunc:{?[x~0N;10;L]}
+
+/o
+L:1 2 3 0N 5
+myFunc:{?[x~0N;10;L]}
+myFunc[L]
+L
+/
+1 2 3 10 5
+1 2 3 0N 5
+\
+```
+
+@, Trap
+```q
+@[function; arguments; errorFunction]
+```
+The @ operator (“trap”) applies a function to its arguments — but if an error occurs, it calls the third argument (errorFunction) instead.
+1st argument → the function you want to call (e.g. sin)
+2nd argument → the argument(s) to that function (e.g. `symbol)
+3rd argument → a function that handles the error (receives the error message as input)
+```q
+argument:`symbol
+handleError:{[arg;error]     2 "This broke it:",string[arg];
+                            -2 "... type :",string type arg;
+                            -2 "With error:",error;
+                             0b};
+
+errorFunction:handleError[argument]     //projecting to one argument
+
+@[sin;argument;errorFunction]  
+/
+0b
+This broke it:symbol... type :-11
+With error:type
+\
+
+protectedSin:{[arg] @[sin;arg;handleError[arg]]}   //use protected evaluation to call sin with an argument
+protectedSin[90]
+/0.8939967
+protectedSin[`break]     //failure return 0b
+0b
+This broke it:break... type :-11
+With error:type
+```
+
+
+The way to repeat `\t`
+```q
+/by putting :num
+\t:10 a*a:til 100000
+```
+
+while
+```q
+r:1 1
+x:10
+while[x-:1;r,:sum -2#r]  
+r
+/1 1 2 3 5 8 13 21 34 55 89
+```
+
