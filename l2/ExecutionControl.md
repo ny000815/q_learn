@@ -158,3 +158,32 @@ r
 /1 1 2 3 5 8 13 21 34 55 89
 ```
 
+# Ex
+rand 100 vs 1?100
+```q
+show x:rand 100 / schalar
+/3
+show x:1?100 / list
+/,3
+```
+if not
+```q
+tomorrow:{if[not -14h~type x;
+                '`$"'Parameter should be a date"];
+            x+1}
+```
+
+```q
+/x
+replaceNegatives:{?[x < 0; x:0]}
+/o
+replaceNegatives:{?[x<0;0;x]}
+```
+
+sym data processing
+```q
+L: `abc3A`abdB`dakB
+last each string L
+/ABB
+```
+
