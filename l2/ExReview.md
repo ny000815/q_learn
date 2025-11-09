@@ -1,5 +1,5 @@
-# 2. Lists
-infix notatiion & functional notation
+# 1.Atom
+infix notation & functional notation
 ```q
 ⭐️
 add:+      // create your own function add from primitive addition operator
@@ -10,7 +10,7 @@ isPositive:>[;0]
 //This actually worrks
 isPositive:0<
 ```
-
+# 2. Lists
 drop and the order of the q interpretation
 Create `list4`, which is the first 2 elements of `list1` joined to everything except the first element of `list2`. 
 ```q
