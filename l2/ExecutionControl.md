@@ -187,3 +187,9 @@ last each string L
 /ABB
 ```
 
+Multivalent Functions - Trap .
+```q
+multiply:{.[*; (x;y);{"Error: The inputs should be of numerical types"}]}
+```
+
+
