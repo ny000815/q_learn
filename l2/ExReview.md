@@ -96,3 +96,105 @@ list6 in list6 inter list7
 ```
 
 
+# list rev  
+
+```q
+list6 where not list6 in list7  
+list6 except list7  
+```
+
+
+# 3.String  
+>cast to atom?  
+
+- ss -> return index  
+- "hello" = "o" -> return bool  
+- null can be used to find ~ -> return bool  
+- boolean list can be inverted by putting not at first  
+- need of first pbc for vs where to split  
+- editing the first letter of each word in a string that represents a list of lists.  
+```q  
+dist[i;0]:upper dist[i;0]  
+```
+
+```q  
+/both o  
+a[i]: upper a[i]  
+a[i]:a[i]upper  
+```
+- trim micro trim  
+- = applies to each item in the list and return like 1 0 0 1 b, while "~" returns 1b only when all items.  
+- Order matters for "like" which accepts Regex.  
+```q
+"abcd" like "abc*"  
+
+/x  
+"abc*"~"abcd"  
+```
+
+- except and ,QnA  
+- ssf with each  
+
+```q  
+ss[i;"s";"o"] each s  
+```
+
+- using drop`_` for extracting the path -> hsym(host symbol)
+
+```q
+"/mount/folder/file.txt" =>  
+../mount/folder/file.txt
+```
+
+
+# 4.Cast  
+`uu$.z.t
+`ss$.z.t
+`hh$.z.t
+- converting time to timestamp +.z.d  
+- Use capital letter to cast from strings : "T"$12:00:00"  
+- Casting to symbol : \`$ "abc; bbc; cba" ->why? other way?  
+
+
+# 5.Func  
+- Don't forget ';' at the end of lines of function  
+- Usage of 'in' and list for multiple choice of type : (type x) in -5 -6 -7h  
+-  `@` Cleaner way
+```q
+doubleSecondItem:{@[x;1;:2*x[1]]}
+->
+doubleSecondItem:{@[x;1;2*]}
+```
+- `?` usage and the order. Opposite for `in` and `like`
+```q
+3 4 6?6
+/2
+```
+string with multiple args
+```q
+toFullName:{`$" " sv string (x;y)}
+
+/faster than string a,b,c
+x:`a
+y:`b
+
+\ts string (x;y) 10
+/0 1040
+
+\ts string (x,y) 10
+/01152
+```
+❓❓
+Create a monadic function `parsePath` that takes a full q filepath (as a string) [":/mount/folder/file.txt"] and returns the directory and file (as strings)
+Example of Code:
+```q
+parsePath:{string ` vs hsym`$x}
+parsePath[":/mount/folder/file.txt"]
+/
+":/mount/folder"
+"file.txt"
+\
+```
+
+
+
