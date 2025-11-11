@@ -196,5 +196,38 @@ parsePath[":/mount/folder/file.txt"]
 \
 ```
 
+# 6 Iterator
+- \`
+```q
+x: 10 30 20 40 
+y: 13 34 25 46
+x, ' y
+/
+  10 13 
+  30 34 
+  20 25
+  40 46
+\
+
+/x
+each x , each y
+/error
+```
+- each left each right, the order  `x ,\: y`
+- both each usage (with bracket)
+```q
+1 -2 _' (x;y)
+```
+- roll, ? with list
+```q
+1 2 5 ?\: `ab`bc`cd
+/
+,`bc
+`ab`cd
+`bc`cd`bc`ab`bc
+`i`love`rockandroll
+\
+```
+- drop_ usage, dropping one letter a \_ num
 
 
