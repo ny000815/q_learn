@@ -185,6 +185,7 @@ y:`b
 /01152
 ```
 ❓❓
+hsym(host shmbol)
 Create a monadic function `parsePath` that takes a full q filepath (as a string) [":/mount/folder/file.txt"] and returns the directory and file (as strings)
 Example of Code:
 ```q
