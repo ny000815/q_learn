@@ -109,7 +109,7 @@ list6 except list7
 
 - ss -> return index  
 - "hello" = "o" -> return bool  
-- null can be used to find ~ -> return bool  
+- null can be used to find " " -> return bool  
 - boolean list can be inverted by putting not at first  
 - need of first pbc for vs where to split  
 - editing the first letter of each word in a string that represents a list of lists.  
