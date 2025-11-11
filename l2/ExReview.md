@@ -120,7 +120,7 @@ dist[i;0]:upper dist[i;0]
 ```q  
 /both o  
 a[i]: upper a[i]  
-a[i]:a[i]upper  
+a[i]:@[a;i;upper]
 ```
 - trim micro trim  
 - = applies to each item in the list and return like 1 0 0 1 b, while "~" returns 1b only when all items.  
