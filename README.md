@@ -38,20 +38,20 @@
 
 | Topic | Status |
 | :--- | :---: |
-| Data on Disk | |
-| Enumeration | |
-| Splayed Tables | |
-| Partitioned Tables | |
-| Segmented Tables | |
-| Table Attributes | |
-| Functional Statements | |
-| Namespaces | |
-| Iterators | |
-| Joins | |
-| Debugging | |
-| Advanced IPC | |
-| Memory Management & Query Optimization | |
-| Parallelization | |
+| 01 Data on Disk | |
+| 02 Enumeration | |
+| 03 Splayed Tables | |
+| 04 Partitioned Tables | |
+| 05 Segmented Tables | |
+| 06 Table Attributes | |
+| 07 Functional Statem... | |
+| 08 Namespaces | |
+| 09 Iterators | |
+| 10 Joins | |
+| 11 Debugging | |
+| 12 Advanced IPC | |
+| 13 Memory Managemen... | |
+| 14 Parallelization | |
 
 ---
 
@@ -59,13 +59,13 @@
 
 | Topic | Status |
 | :--- | :---: |
-| Quickstart | |
-| Adding Data Feed | |
-| Real Time Subscriber | |
-| Logging & Replay | |
-| End of Day | |
-| Gateways | |
-| Conclusion | |
+| 01 Quickstart | |
+| 02 Adding Data Feed | |
+| 03 Real Time Subscr... | |
+| 04 Logging & Replay | |
+| 05 End of Day | |
+| 06 Gateways | |
+| 07 Conclusion | |
 
 ---
 
@@ -73,11 +73,17 @@
 
 | Topic | Status |
 | :--- | :---: |
-| Introduction | |
-| Getting Started | |
-| Streaming | |
-| Exploring Design Components | |
-| Advanced Querying | |
-| Preparing for Publication | |
+| 01 Introduction | |
+| 02 Getting Started | |
+| 03 Streaming | |
+| 04 Exploring Design... | |
+| 05 Advanced Querying | |
+| 06 Preparing for Pu... | |
 
-### 💡 q Tips
+---
+
+### 💡 Books
+
+| Topic | Status |
+| :--- | :---: |
+| q tips | |

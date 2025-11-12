@@ -109,7 +109,7 @@ list6 except list7
 
 - ss -> return index  
 - "hello" = "o" -> return bool  
-- null can be used to find ~ -> return bool  
+- null can be used to find " " -> return bool  
 - boolean list can be inverted by putting not at first  
 - need of first pbc for vs where to split  
 - editing the first letter of each word in a string that represents a list of lists.  
@@ -120,7 +120,7 @@ dist[i;0]:upper dist[i;0]
 ```q  
 /both o  
 a[i]: upper a[i]  
-a[i]:a[i]upper  
+a[i]:@[a;i;upper]
 ```
 - trim micro trim  
 - = applies to each item in the list and return like 1 0 0 1 b, while "~" returns 1b only when all items.  
@@ -185,6 +185,7 @@ y:`b
 /01152
 ```
 ❓❓
+hsym(host shmbol)
 Create a monadic function `parsePath` that takes a full q filepath (as a string) [":/mount/folder/file.txt"] and returns the directory and file (as strings)
 Example of Code:
 ```q
