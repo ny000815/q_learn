@@ -230,4 +230,128 @@ each x , each y
 ```
 - drop_ usage, dropping one letter a \_ num
 
+# 7. Execution Control
+- `rand` if asked to gen random number, need to clarify the type, atom or list
+```q
+/the difference of return result by "<" ">" "=". Only later one works for if's condition
+show v: 1?100
+v > 50
+/,1b
+/51
+show a: rand 100
+v > 50
+/1b
+/51
+
+if[v>50; v*:2]
+/ error type
+
+if[a>50; v*:2]
+/ 102
+```
+- ❓is 1st one better??
+```q
+'`$"abc"
+/or
+-2"`abc"
+```
+- if-else with `$`
+```q
+Pasting this data from Prisma Access Browser is prohibited
+```
+- non conditional expression
+```q
+OddOrEven:{`even`odd x mod 2}
+
+
+isFloat:{9h = abs type x}
+```
+- else if
+```q
+abc:{$[x~`a;1;x~`b;2;x~`b;3;0]}
+```
+- `?` for vector conditional evaluation
+```q
+replaceNegatives:{?[x<0;0;x]}
+/which one has better performance?
+
+replaceNegatives:{@[x;where x < 0;:;0]} 
+//Thouhgt the 2nd last arg can be ":0".but it makes whole list 0. It can be *2 or upper
+```
+- (%2 vs \*0.5 Performance comparison)
+```q
+\ts 353943280%2 100
+/0 784
+\ts 353943280*0.5 100
+/0 784
+```
+- ⭐❓ giving the arg to inner func
+```q
+add1:{[a]{[a]a+1}[a]}
+{[a]a+1}[a]
+```
+- ⭐calling func with protection
+```q
+/@[f; x; e]
+@[add1;`a;0]
+@[add1;`a;{show x;0}] // showing error type
+
+⭐　/.[g; (a;b;...); e]   list's list ver.g≒f
+/implementing inside the func
+multiply:{.[*;(x;y);{"Error: The inputs should be numerical value"}]}
+```
+
+- ⭐fizzbuzz
+```q
+fizzbuzz:{
+    {$[0 = x mod 3;
+        $[0 = x mod 5;
+            "fizzbuzz";
+            "fizz"];
+        0 = x mod 5;
+        "buzz";
+        x]} each x}
+Input: 1 2 3 4 5 6 7
+fizzbuzz[Input]
+
+//inner {} is needed for "each". each format:"f each list". Without it, type error
+
+/
+// Create list of arguments
+arg:1+ til 100
+fizzbuzz: {
+    {$[0=x mod 3;
+        $[0=x mod 5;
+            `fizzbuzz;
+            `fizz];
+        0=x mod 5;
+        `buzz;
+        x]} each x}
+20 sublist fizzbuzz arg
+\
+```
+
+- `like`'s output is boolean
+- ⭐converToMile
+```q
+arg:("1 mile";"5 km";"3 miles";"7.5 km";"3 km";"4.2 km";"0.5 miles")
+convertToKm:{b:x like "*mile*";        // Create boolean like of those that are miles
+    v:"F"$first each " " vs/: x;       //Extract numerical value from string
+    ?[b;1.609*v;v]                          // Apply vector conditional
+}
+convertToKm arg
+
+
+
+❓ /where to fix?
+convertToKm:{
+    mi:where x like "*mile*"
+    show num:"F"$first each " " vs/: x
+    @[num;mi;*:1.609]
+	}
+Input: ("1 mile";"5 km";"3 miles";"7.5 km";"3 km";"4.2 km";"0.5 miles")
+convertToKm[Input]
+
+/error num 
+```
 
