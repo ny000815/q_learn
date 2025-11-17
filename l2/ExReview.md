@@ -355,4 +355,39 @@ convertToKm[Input]
 
 /error num 
 ```
+---
+
+# 5. Func
+
+xexp
+	2 exp 8 
+	256
+
+assign error
+	using upper as a vairable which is taken by func
+
+forgetting semicolon
+
+minus and neg difference
+	neg would be done at the end so
+	-1 +--- vs neg 1 --- would be totally different because of the sign difference
+
+precendence
+	type [x] in 5 6 7h
+
+⭐️finding place getIndexOf[`john`mike`pat`tim`harry;`pat] -->2
+	where x = y return list.
+	x?y returns atom
+
+\* $
+	casting to \*. 
+
+symbol vector to string
+	making it to string first.
+	```
+	`$"."sv string `quick`brown`fox
+	```
+
+split hsymed path to path and file
+	\` vs hsym "aa/bb/cc"
 
