@@ -391,3 +391,44 @@ symbol vector to string
 split hsymed path to path and file
 	\` vs hsym "aa/bb/cc"
 
+
+# 6 Iterator
+
++roll right? left?
+	3?5 /left is the num right is numlist or limit
+	0 4 0
+
+cor 
+
+# 7 Execution Control
+if doesn't have infix notation
+
+using error message(Not warning)
+	```q
+	'`$"error123"
+	```
+
+if else
+	$[condition;xpattern;yelsepattern]
+
+if else or vector
+	?[condition;xpattern;yelsepattern]
+
+⭐️givin parameter to func right after definition
+	```q
+	/fixing this
+	add1:{[a] {a+1}[a]}
+	/2options
+	add1:{[a] {x+1}[a]} 
+	add1:{[a] {[a]a+1}[a]}
+	```
+
+Trapping (Safe Monadic Function Calling)
+	@[function;arguments;errorFunction]
+
+Trapping (Safe dyadic/polyadic Function Calling)
+	```q
+	.[calculation;(x;y;z);{"error: ",x}]
+	multiply:{.[*;(x;y);{-2"The inputs should be of numerical types"}]}
+	q).[{x+y+z}; (20;50;"c"); {"Function has returned an error: ", x}]
+	
