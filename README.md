@@ -24,10 +24,10 @@
 | 04 Cast | ✅ |
 | 05 Functions | ✅ |
 | 06 Iterators | ✅ |
-| 07 Execution Control | |
-| 08 Scripting And L... | |
-| 09 Dictionaries | |
-| 10 Tables | |
+| 07 Execution Control | ✅ |
+| 08 Scripting And L... | ✅ |
+| 09 Dictionaries | ✅ |
+| 10 Tables | ✅ |
 | 11 Queries | |
 | 12 Joins | |
 | 13 Working with Files | |
