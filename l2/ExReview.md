@@ -411,7 +411,7 @@ using error message(Not warning)
 if else
 	$[condition;xpattern;yelsepattern]
 
-if else or vector
+if else or vector x & y need to be same type!!!
 	?[condition;xpattern;yelsepattern]
 
 ⭐️givin parameter to func right after definition
@@ -432,3 +432,23 @@ Trapping (Safe dyadic/polyadic Function Calling)
 	multiply:{.[*;(x;y);{-2"The inputs should be of numerical types"}]}
 	q).[{x+y+z}; (20;50;"c"); {"Function has returned an error: ", x}]
 	
+
+# Favorites
+fizzbuzz
+```q
+fizzbuzz:{
+    {$[0=x mod 3;$[0=x mod 5;`fizzbuzz;`fizz];$[0=x mod 5;`fizz;x]]
+        }each x
+    }
+
+//with dictionary
+fizzbuzz:{
+    show a:0=x mod 3;
+    show b:2* 0 = x mod 5;
+    show i:a+b;
+    map:1 2 3!`fizz`buzz`fizzbuzz;
+    (`$string x)^ map i
+    }
+//1. ^
+//2. `string x
+```
