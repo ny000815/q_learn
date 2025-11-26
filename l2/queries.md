@@ -1,29 +1,4 @@
-aze x}
-select last5DaysClose:last5 close by sym from daily
-```
-⭐️xbar
-```q
-select trds:count i, vwap:size wavg price by sym, 15 xbar time.minute from trade where date = last date 
-```
-
-by 00:01:30
-```q
-select by `time$0D00:01:30.000 xbar `timespan$time from trade
-```
-
-Use `xbar` to generate a count of the number of trades (`trade where date = last date`) in intervals of trade size (interval size 10).(_This is commonly used to generate a histogram of trade size distribution_)
-```q
-select count i by 10 xbar size from trade where date = last date
-```
-
-### exec
-useful to get whole column
-```q
-exec size from daily 
-/
-536408 532160 530579 531534 539534 535376 524307 531573 538767 545950 533825 ..
-\
-exec 3 sublist price, 3 sublist size by sym from daily //sublistin# 11.Queries
+# 11.Queries
 - How to construct a qSQL query
 - The four different qSQL queries - `select`,`exec`,`update` and `delete`
 - Building queries with constraints
@@ -54,7 +29,32 @@ selecting by giving arg
 ```
 ⭐️?
 ```q
-last5:{-5 sublist rg for visibility
+last5:{-5 sublist raze x}
+select last5DaysClose:last5 close by sym from daily
+```
+⭐️xbar
+```q
+select trds:count i, vwap:size wavg price by sym, 15 xbar time.minute from trade where date = last date 
+```
+
+by 00:01:30
+```q
+select by `time$0D00:01:30.000 xbar `timespan$time from trade
+```
+
+Use `xbar` to generate a count of the number of trades (`trade where date = last date`) in intervals of trade size (interval size 10).(_This is commonly used to generate a histogram of trade size distribution_)
+```q
+select count i by 10 xbar size from trade where date = last date
+```
+
+### exec
+useful to get whole column
+```q
+exec size from daily 
+/
+536408 532160 530579 531534 539534 535376 524307 531573 538767 545950 533825 ..
+\
+exec 3 sublist price, 3 sublist size by sym from daily //sublisting for visibility
 /
     | price                                  size                
 ----| -----------------------------------------------------------
@@ -110,3 +110,35 @@ fby without where pattern
 select sym, size, ex, lessThanEx: size < (avg;size) fby ex from trade
 ```
 
+# Ex
+- xbar is after by
+```q
+select by 10 xbar time.minute, sym from trade
+```
+- using <> instead of not a=b.
+- using in for where clause
+```q
+select from trade where sym in `JPM`AAPL
+```
+- how to create table
+- wavg
+```q
+size wavg price
+```
+
+- by 1 minute with time type
+```q
+/possible to cast after by
+`time$time.minute
+
+
+/if it is 1, no need to use xbar
+by 1 xbar time.minute
+/equals
+by time,minute
+```
+
+- Remember to cast when you manipulate int with decimals
+```q
+update `int$price % 0.78
+```
