@@ -1,0 +1,28 @@
+# The Plain Vanilla Tick Setup
+[DefconQ: The Plain Architecture](defconq.tech/docs/architecture/plain)
+
+TP(Ticker Plant)
+- tick mode
+- batch mode
+- No `get` command. Use `-11!` instead to refer TP log file for prod
+- TP log is composed by 3 parts, 
+	- name of the update function on rt-subscriber
+	- name of table to be updated
+	- data
+
+RDB(Real-time DB)
+	To optimize query performance, add the g (grouped) attribute to the sym column of your tables.
+```q
+q) update sym:`g#sym from trade
+
+q) meta trade
+c     | t f a
+------| -----
+sym   | s   g
+price | f
+size  | i
+time  | t
+```
+
+HDB(Histrocial DB)
+	To optimize query performance, apply the p (parted) attribute on the sym column of your tables
