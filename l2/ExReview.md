@@ -376,6 +376,7 @@ precendence
 	type [x] in 5 6 7h
 
 ⭐️finding place getIndexOf[`john`mike`pat`tim`harry;`pat] -->2
+
 	where x = y return list.
 	x?y returns atom
 
