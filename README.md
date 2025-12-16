@@ -28,9 +28,9 @@
 | 08 Scripting And L... | ✅ |
 | 09 Dictionaries | ✅ |
 | 10 Tables | ✅ |
-| 11 Queries | |
-| 12 Joins | |
-| 13 Working with Files | |
+| 11 Queries | ✅ |
+| 12 Joins | ✅ |
+| 13 Working with Files | ✅ |
 
 ---
 
